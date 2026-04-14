@@ -52,6 +52,8 @@ dnf install -y nano wget bind-utils net-tools git zip unzip tar
 
 ```
 dnf update -y
+
+systemctl restart NetworkManager
 ```
 
 ## Install the setup-static-ip utility
