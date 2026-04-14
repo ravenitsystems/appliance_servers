@@ -45,7 +45,7 @@ dnf -y install https://rpms.remirepo.net/enterprise/remi-release-10.rpm
 
 ## Install Basic Tools
 ```
-dnf install -y nano wget bind-utils net-tools git zip unzip tar 
+dnf install -y nano wget bind-utils net-tools git zip unzip tar curl
 ```
 
 ## Update the system to latest available packages
