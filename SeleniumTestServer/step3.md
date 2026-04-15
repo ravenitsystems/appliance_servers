@@ -19,7 +19,7 @@ if [[ \$# -ne 1 ]]; then
 fi
 VERSION="\$1"
 OUTPUT_PATH="/opt/selenium/selenium-server.jar"
-URL="https://github.com/SeleniumHQ/selenium/releases/download/selenium-\${VERSION}/selenium-server-\${VERSION}.zip"
+URL="https://github.com/SeleniumHQ/selenium/releases/download/selenium-\${VERSION}/selenium-server-\${VERSION}.jar"
 echo "Downloading Selenium Server version: \${VERSION}"
 echo "From: \${URL}"
 echo "To:   \${OUTPUT_PATH}"
@@ -33,4 +33,39 @@ EOL
 chmod +x /usr/bin/download-selenium
 
 download-selenium 4.32.0
+```
+
+## Create the user the Selinium server will run under
+
+```
+useradd --system --create-home --shell /sbin/nologin selenium || true
+
+chown -R selenium:selenium /opt/selenium
+```
+
+## Create the service and start and enable it
+
+This step creates the service that runs the selinium server, you can verify the server is correctly installed by running `systemctl status selenium` or `curl http://127.0.0.1:4444/status`
+
+```
+cat >/etc/systemd/system/selenium.service <<EOL
+[Unit]
+Description=Selenium Server
+After=network.target
+[Service]
+Type=simple
+User=selenium
+Group=selenium
+WorkingDirectory=/opt/selenium
+ExecStart=/usr/bin/java -jar /opt/selenium/selenium-server.jar standalone --port 4444
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+[Install]
+WantedBy=multi-user.target
+EOL
+
+systemctl daemon-reload
+
+systemctl enable --now selenium
 ```
