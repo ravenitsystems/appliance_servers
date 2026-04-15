@@ -19,7 +19,7 @@ if [[ \$# -ne 1 ]]; then
 fi
 VERSION="\$1"
 OUTPUT_PATH="/opt/selenium/selenium-server.jar"
-URL="https://github.com/SeleniumHQ/selenium/releases/latest/download/selenium-server-\${VERSION}.jar"
+URL="https://github.com/SeleniumHQ/selenium/releases/download/selenium-\${VERSION}/selenium-server-\${VERSION}.zip"
 echo "Downloading Selenium Server version: \${VERSION}"
 echo "From: \${URL}"
 echo "To:   \${OUTPUT_PATH}"
@@ -32,5 +32,5 @@ EOL
 
 chmod +x /usr/bin/download-selenium
 
-download-selenium.sh 4.32.0
+download-selenium 4.32.0
 ```
